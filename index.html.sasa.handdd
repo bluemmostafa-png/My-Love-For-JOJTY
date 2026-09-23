@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رحلة قطار الحب 🚂💖</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background: linear-gradient(135deg, #ffe5ec, #ffc2d1); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 15px; overflow-x: hidden; }
+        .container { background: white; width: 100%; max-width: 450px; border-radius: 30px; box-shadow: 0 15px 35px rgba(255, 75, 110, 0.2); padding: 25px; text-align: center; border: 3px solid #ff4d6d; position: relative; }
+        h1 { color: #ff4d6d; margin-bottom: 15px; font-size: 24px; }
+        .step, .reward-screen { display: none; animation: fadeIn 0.5s ease-out forwards; }
+        .step.active, .reward-screen.active { display: flex; flex-direction: column; align-items: center; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        .btn { background: #ff4d6d; color: white; border: none; padding: 12px 25px; font-size: 18px; border-radius: 25px; cursor: pointer; transition: 0.3s; margin-top: 15px; width: 100%; font-weight: bold; }
+        .btn:hover { background: #ff758f; transform: scale(1.02); }
+        
+        /* Stage 1: Cupid */
+        .cupid-area { width: 100%; height: 200px; background: #fff0f3; border-radius: 20px; position: relative; overflow: hidden; border: 2px dashed #ff4d6d; }
+        .moving-heart { position: absolute; font-size: 40px; cursor: pointer; user-select: none; }
+
+        /* Stage 2: Math */
+        .math-box { font-size: 28px; color: #ff4d6d; margin: 20px 0; font-weight: bold; }
+        .input-field { width: 100%; padding: 12px; border: 2px solid #ffb3c1; border-radius: 15px; text-align: center; font-size: 18px; outline: none; }
+
+        /* Stage 3: Scratch */
+        .scratch-container { position: relative; width: 200px; height: 200px; margin: 20px auto; border-radius: 15px; overflow: hidden; }
+        .scratch-bg { position: absolute; width: 100%; height: 100%; background: #fff0f3; display: flex; justify-content: center; align-items: center; font-size: 50px; z-index: 1; }
+        .scratch-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; cursor: pointer; touch-action: none; }
+
+        /* Stage 4: Maze */
+        .maze-container { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; width: 250px; height: 250px; margin: 20px auto; background: #fff0f3; padding: 5px; border-radius: 15px; }
+        .maze-cell { background: white; border-radius: 5px; display: flex; justify-content: center; align-items: center; font-size: 20px; }
+        .maze-wall { background: #ffb3c1; }
+        .maze-player { cursor: pointer; font-size: 24px; }
+
+        /* Reward Card Style */
+        .reward-card { background: linear-gradient(135deg, #ff4d6d, #ff758f); color: white; padding: 25px 20px; border-radius: 25px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); width: 100%; margin-top: 10px; }
+        .reward-card h2 { font-size: 22px; margin-bottom: 15px; line-height: 1.4; }
+        .reward-card p { font-size: 16px; line-height: 1.8; text-align: justify; direction: rtl; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- شاشة البداية -->
+    <div class="step active" id="step0">
+        <h1>🚂 رحلة قطار الحب التفاعلية 💖</h1>
+        <p style="color: #666; font-size: 16px; margin-bottom: 15px;">المرة دي اللعبة مليانة تحديات وكل مرحلة تخلصيها ليكي عندي رسالة سرية وجائزة واه بحبكككك</p>
+        <button class="btn" onclick="startGame()">يلا بيناااااا نركب القطر 🚀</button>
+    </div>
+
+    <!-- المرحلة 1 -->
+    <div class="step" id="step1">
+        <h1>المرحلة 1: اصيدي قلب كيوبيد 💘</h1>
+        <p style="color: #888; font-size: 14px; margin-bottom: 15px;">اضغطي على القلب الطاير بسرعة عشان تصيبيه وخلي بالك دي قلوبي ليكي خديها كلها بق</p>
+        <div class="cupid-area" id="cupid-area">
+            <div class="moving-heart" id="moving-heart" onclick="winStage(1)">❤️</div>
+        </div>
+    </div>
+
+    <!-- شاشة جائزة 1 -->
+    <div class="reward-screen" id="reward1">
+        <div class="reward-card">
+            <h2>اشطر كتكوتة في الدنيا كلللها ينااااس 🥳💖🐣</h2>
+            <p>انتي مش بس حبيبي انتي الحاجة اللي جت نورت قلبي اللي فرحتني فرحة من نوع اول مرة احسو واحبو بحب اوي شعور اني اكون معاكي بكلمك بتكون اجمل لحظات حياتي الشعور لوحدو بس بيخليني اسعد انسان في الدنيا كلها ربنا يخليكي ليا ويديمك ليا نعمة يارب ينور عيني بحبك بحبككككككككك يجوجتيي</p>
+        </div>
+        <button class="btn" onclick="nextStage(2)">المرحلة التانية ➡️</button>
+    </div>
+
+    <!-- المرحلة 2 -->
+    <div class="step" id="step2">
+        <h1>المرحلة 2: معادلة الحب الحسابية 🔢</h1>
+        <p style="color: #888; font-size: 14px; margin-bottom: 15px;"> اكتبي الكلمة الي بتكمل المعادلة دي دايما وبتعمل يومي دايما</p>
+        <div class="math-box">أنا + أنتِ = ...... ؟</div>
+        <input type="text" id="math-input" class="input-field" placeholder="اكتبي الحل هنا...">
+        <button class="btn" onclick="checkMath()">تحقق من الحل 🔒</button>
+    </div>
+
+    <!-- شاشة جائزة 2 -->
+    <div class="reward-screen" id="reward2">
+        <div class="reward-card">
+            <h2>دلوعتيييييي الشطورة بحبكككك🥳💖</h2>
+            <p>اشطر كتكوتة كدا كدا اصلا اللي بحبها اللي لو دورت في العالم كلو مش علاقي في حنيتها ولا جمالها جمالها اللي من جوا قبل برا بحبك بحبك ينور عيني والله وعارف اني لو دورت في الدنيا كلها مش هلاقي حتى ضفرك انتي في عيني والله مفيش زيك ولا في فمكانتك عندي انتي بقيتي في قلبي دنيا غير الدنيا اصلا بقى ليكي بيتك في قلبي بحبك بحبكككك اوييييييييي يچوچتيييي يا اجمل حاجة دخلت دنيتييييي</p>
+        </div>
+        <button class="btn" onclick="nextStage(3)">المرحلة التالتة ➡️</button>
+    </div>
+
+    <!-- المرحلة 3 -->
+    <div class="step" id="step3">
+        <h1>المرحلة 3: امسحي الشاشة واكتشفي السر 🧼</h1>
+        <p style="color: #888; font-size: 14px;">امسحي بصابعك المسكر على المربع الرمادي عشان تظهري السر</p>
+        <div class="scratch-container">
+            <div class="scratch-bg">👑💖</div>
+            <canvas class="scratch-canvas" id="scratch-canvas" width="200" height="200"></canvas>
+        </div>
+        <button class="btn" id="scratch-btn" style="display:none;" onclick="winStage(3)">تم المسح بالكامل ✨</button>
+    </div>
+
+    <!-- شاشة جائزة 3 -->
+    <div class="reward-screen" id="reward3">
+        <div class="reward-card">
+            <h2>مبروك كسبت اشطر كتكوتة في الدنيا كلللها ينااااس 🥳💖🐣</h2>
+            <p>بحبك وبعشقككك يا اجمل جدلوعة في الدنيا كلها بحبكك اويي ومش شايف في الدنيا دي كلها حد غيرك يا ملاكي الطيب الحنين</p>
+        </div>
+        <button class="btn" onclick="nextStage(4)">المرحلة الاخيرة ➡️</button>
+    </div>
+
+    <!-- المرحلة 4 -->
+    <div class="step" id="step4">
+        <h1>المرحلة 4: وصلي قلبي لقلبك 🌀</h1>
+        <p style="color: #888; font-size: 14px; margin-bottom: 15px;">اضغطي على المربعات البيضا عشان تحركي القلب لحد ما يوصل لقلبك التاني</p>
+        <div class="maze-container" id="maze"></div>
+    </div>
+
+    <!-- شاشة الجائزة الكبرى النهائية -->
+    <div class="reward-screen" id="reward4">
+        <div class="reward-card" style="background: linear-gradient(135deg, #d90429, #ef233c);">
+            <h1 style="color:white; font-size:28px; margin-bottom:10px;">🏆 الجائزة الكبرى النهائية 🏆</h1>
+            <h2>مبروك كسبت اشطر كتكوتة في الدنيا كلللها ينااااس 🥳💖🐣</h2>
+            <p>بحبك وهفضل بحبك انتي بس ينور عيني يا اغلى من عيني انتي هتفضلي دلوعتي انا وانا هفضل حبيبك اللي بيدلعك اللي بيحبك اكتر من نفسو ودنيتو كلها بحبكككككك اوييييي ينور عيني بحبككك🌟</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    let cupidInterval;
+    function startGame() {
+        document.getElementById('step0').classList.remove('active');
+        document.getElementById('step1').classList.add('active');
+        initCupid();
+    }
+
+    function nextStage(stageNum) {
+        document.querySelectorAll('.reward-screen').forEach(r => r.classList.remove('active'));
+        document.getElementById('step' + stageNum).classList.add('active');
+        if(stageNum === 3) initScratch();
+        if(stageNum === 4) initMaze();
+    }
+
+    function winStage(stageNum) {
+        if(stageNum === 1) clearInterval(cupidInterval);
+        document.getElementById('step' + stageNum).classList.remove('active');
+        document.getElementById('reward' + stageNum).classList.add('active');
+    }
+
+    // --- STAGE 1: CUPID ---
+    function initCupid() {
+        const heart = document.getElementById('moving-heart');
+        const area = document.getElementById('cupid-area');
+        cupidInterval = setInterval(() => {
+            let x = Math.random() * (area.clientWidth - 40);
+            let y = Math.random() * (area.clientHeight - 40);
+            heart.style.left = x + 'px';
+            heart.style.top = y + 'px';
+        }, 600);
+    }
+
+    // --- STAGE 2: MATH ---
+    function checkMath() {
+        const ans = document.getElementById('math-input').value.trim();
+        if(ans === 'حب' || ans === 'الحب' || ans === 'حبنا') {
+            winStage(2);
+        } else {
+            alert('فكري كدة انتي وانا بنعمل ايه؟ 😉');
+        }
+    }
+
+    // --- STAGE 3: SCRATCH ---
+    let scrambledPixels = 0;
+    function initScratch() {
+        const canvas = document.getElementById('scratch-canvas');
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#b8c0ff';
+        ctx.fillRect(0, 0, 200, 200);
+
+        function scratch(e) {
+            const rect = canvas.getBoundingClientRect();
+            const x = (e.clientX || e.touches[0].clientX) - rect.left;
+            const y = (e.clientY || e.touches[0].clientY) - rect.top;
+            ctx.globalCompositeOperation = 'destination-out';
+            ctx.beginPath();
+            ctx.arc(x, y, 20, 0, Math.PI * 2);
+            ctx.fill();
+            scrambledPixels++;
+            if(scrambledPixels > 60) {
+                document.getElementById('scratch-btn').style.display = 'block';
+            }
+        }
+        canvas.addEventListener('mousemove', scratch);
+          
